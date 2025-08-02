@@ -61,6 +61,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _pauseButton;
 
+    [Header("UI Tabs")]
+    [SerializeField] private Button _normalUpgradeTab;
+    [SerializeField] private Button _prestigeUpgradeTab;
+    [SerializeField] private Button _prestigeTab;
+
+
     [Header("Audio Settings UI")]
     [SerializeField] private Slider _masterVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
@@ -114,6 +120,7 @@ public class UIManager : MonoBehaviour
         InitializeUpgradeButtons();
         InitializeAudioSettingsUI();
         InitializeMenuButtons();
+        InitializeTabButtons();
 
         // Subscribe to all relevant events
         SubscribeToEvents();
@@ -344,6 +351,25 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void InitializeTabButtons()
+    {
+        if (_normalUpgradeTab != null)
+        {
+            _normalUpgradeTab.onClick.AddListener(ShowNormalUpgradesPanel);
+        }
+
+        if (_prestigeUpgradeTab != null)
+        {
+            _prestigeUpgradeTab.onClick.AddListener(ShowPrestigeUpgradesPanel);
+        }
+
+        if (_prestigeTab != null)
+        {
+            _prestigeTab.onClick.AddListener(ShowPrestigePanel);
+        }
+
+    }
+
     private void UpdateInitialUI()
     {
         // Set initial currency values
@@ -351,11 +377,11 @@ public class UIManager : MonoBehaviour
         {
             _displayedGrit = _currencyManager.GetGrit();
             _displayedFavors = _currencyManager.GetFavors();
-            
+
             if (_gritText != null) _gritText.text = FormatCurrency(_displayedGrit);
             if (_favorsText != null) _favorsText.text = FormatCurrency(_displayedFavors);
         }
-        
+
         // Set initial progress values
         if (_progressManager != null)
         {
@@ -363,11 +389,11 @@ public class UIManager : MonoBehaviour
             HandleSlopeChanged(_progressManager.GetCurrentSlope());
             HandleComboStateChanged(_progressManager.GetComboState());
         }
-        
+
         // Update upgrade buttons
         UpdateAllUpgradeButtonCosts();
         UpdateAllPrestigeUpgradeButtonCosts();
-        
+
         // Update prestige UI
         UpdatePrestigeButton();
         UpdatePrestigeCount();
@@ -1122,28 +1148,13 @@ public class UIManager : MonoBehaviour
         switch (panelType)
         {
             case UIPanel.NormalUpgrades:
-                if (_normalUpgradesPanel != null)
-                {
-                    _normalUpgradesPanel.SetActive(true);
-                    HidePanel(UIPanel.PrestigeUpgrades);
-                    HidePanel(UIPanel.Prestige);
-                }
+                if (_normalUpgradesPanel != null) _normalUpgradesPanel.SetActive(true);
                 break;
             case UIPanel.PrestigeUpgrades:
-                if (_prestigeUpgradesPanel != null)
-                {
-                    _prestigeUpgradesPanel.SetActive(true);
-                    HidePanel(UIPanel.NormalUpgrades);
-                    HidePanel(UIPanel.Prestige);
-                }
+                if (_prestigeUpgradesPanel != null) _prestigeUpgradesPanel.SetActive(true);
                 break;
             case UIPanel.Prestige:
-                if (_prestigePanel != null)
-                {
-                    _prestigePanel.SetActive(true);
-                    HidePanel(UIPanel.NormalUpgrades);
-                    HidePanel(UIPanel.PrestigeUpgrades);
-                }
+                if (_prestigePanel != null) _prestigePanel.SetActive(true);
                 break;
             case UIPanel.Settings:
                 if (_settingsPanel != null) _settingsPanel.SetActive(true);
@@ -1203,11 +1214,32 @@ public class UIManager : MonoBehaviour
             ShowPanel(panelType);
         }
     }
+
+    private void ShowNormalUpgradesPanel()
+    {
+        ShowPanel(UIPanel.NormalUpgrades);
+        HidePanel(UIPanel.PrestigeUpgrades);
+        HidePanel(UIPanel.Prestige);
+    }
+
+    private void ShowPrestigeUpgradesPanel()
+    {
+        ShowPanel(UIPanel.PrestigeUpgrades);
+        HidePanel(UIPanel.NormalUpgrades);
+        HidePanel(UIPanel.Prestige);
+    }
+
+    private void ShowPrestigePanel()
+    {
+        ShowPanel(UIPanel.Prestige);
+        HidePanel(UIPanel.NormalUpgrades);
+        HidePanel(UIPanel.PrestigeUpgrades);
+    }
     
     #endregion
 
     #region Helper Methods
-    
+
     private string FormatCurrency(int amount)
     {
         if (amount >= 1000000)

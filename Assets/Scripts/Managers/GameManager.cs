@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LoadGame();
-        _upgradeManager.ManualCheckUnlocks();
+        //_upgradeManager.ManualCheckUnlocks();
         _uiManager.RefreshUIAfterLoad();
         StartGameLoop();
     }

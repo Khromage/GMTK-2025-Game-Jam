@@ -51,7 +51,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void SetAffordable(bool affordable)
     {
-        if (_button != null) _button.interactable = affordable && _isUnlocked;
+        //if (_button != null) _button.interactable = affordable && _isUnlocked;
 
         // Visual feedback for affordability
         Color buttonColor = affordable ? Color.white : Color.gray;

@@ -49,7 +49,7 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
     
     public void SetAffordable(bool affordable)
     {
-        if (_button != null) _button.interactable = affordable;
+        //if (_button != null) _button.interactable = affordable;
         
         // Visual feedback for affordability
         Color buttonColor = affordable ? Color.white : Color.gray;
