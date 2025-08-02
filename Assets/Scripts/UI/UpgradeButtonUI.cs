@@ -6,15 +6,16 @@ using TMPro;
 // UI component for individual upgrade buttons
 public class UpgradeButtonUI : MonoBehaviour
 {
+    [SerializeField] private UpgradeDataSO _upgradeDataSO;
     [Header("UI References")]
     [SerializeField] private Button _button;
     [SerializeField] private TextMeshProUGUI _nameText;
+    [SerializeField] private TextMeshProUGUI _descriptionText;
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private TextMeshProUGUI _costText;
     [SerializeField] private Image _icon;
     [SerializeField] private GameObject _lockedOverlay;
     [SerializeField] private GameObject _maxLevelIndicator;
-
     private UpgradeType _upgradeType;
     private UIManager _uiManager;
     private bool _isUnlocked = false;
@@ -24,10 +25,12 @@ public class UpgradeButtonUI : MonoBehaviour
         _upgradeType = upgradeType;
         _uiManager = uiManager;
 
-        if (_nameText != null) _nameText.text = upgradeType.ToString();
+        if (_nameText != null) _nameText.text = _upgradeDataSO.GetNormalUpgrade(upgradeType).Name;
+        if (_descriptionText != null) _descriptionText.text = _upgradeDataSO.GetNormalUpgrade(upgradeType).Description;
+        if (_icon != null) _icon.sprite = _upgradeDataSO.GetNormalUpgrade(upgradeType).Icon;
+        
         if (_button != null) _button.onClick.AddListener(OnButtonClick);
 
-        UpdateDisplay(); // any fields that need to be populated at init and never change
     }
 
     public void UpdateLevel(int level)
@@ -85,14 +88,6 @@ public class UpgradeButtonUI : MonoBehaviour
                 StartCoroutine(ShakeAnimation());
             }
         }
-    }
-
-    private void UpdateDisplay()
-    {
-        // Initial display setup for static fields
-        // description
-
-        // any values that need updating will be hanlded by UIManager
     }
 
     private IEnumerator PulseAnimation()

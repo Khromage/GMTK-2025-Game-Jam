@@ -6,9 +6,11 @@ using TMPro;
 // Prestige upgrade button UI component
 public class PrestigeUpgradeButtonUI : MonoBehaviour
 {
+    [SerializeField] private UpgradeDataSO _upgradeDataSO;
     [Header("UI References")]
     [SerializeField] private Button _button;
     [SerializeField] private TextMeshProUGUI _nameText;
+    [SerializeField] private TextMeshProUGUI _descriptionText;
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private TextMeshProUGUI _costText;
     [SerializeField] private Image _icon;
@@ -22,7 +24,10 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
         _upgradeType = upgradeType;
         _uiManager = uiManager;
         
-        if (_nameText != null) _nameText.text = upgradeType.ToString();
+        if (_nameText != null) _nameText.text = _upgradeDataSO.GetPrestigeUpgrade(upgradeType).Name;
+        if (_descriptionText != null) _descriptionText.text = _upgradeDataSO.GetPrestigeUpgrade(upgradeType).Description;
+        if (_icon != null) _icon.sprite = _upgradeDataSO.GetPrestigeUpgrade(upgradeType).Icon;
+
         if (_button != null) _button.onClick.AddListener(OnButtonClick);
     }
     

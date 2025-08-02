@@ -121,6 +121,9 @@ public class UIManager : MonoBehaviour
         // Set initial UI values
         UpdateInitialUI();
 
+        // Default to showing normal upgrades
+        ShowPanel(UIPanel.NormalUpgrades);
+
         //Debug.Log("UIManager initialized successfully");
     }
 
@@ -1034,13 +1037,28 @@ public class UIManager : MonoBehaviour
         switch (panelType)
         {
             case UIPanel.NormalUpgrades:
-                if (_normalUpgradesPanel != null) _normalUpgradesPanel.SetActive(true);
+                if (_normalUpgradesPanel != null)
+                {
+                    _normalUpgradesPanel.SetActive(true);
+                    HidePanel(UIPanel.PrestigeUpgrades);
+                    HidePanel(UIPanel.Prestige);
+                }
                 break;
             case UIPanel.PrestigeUpgrades:
-                if (_prestigeUpgradesPanel != null) _prestigeUpgradesPanel.SetActive(true);
+                if (_prestigeUpgradesPanel != null)
+                {
+                    _prestigeUpgradesPanel.SetActive(true);
+                    HidePanel(UIPanel.NormalUpgrades);
+                    HidePanel(UIPanel.Prestige);
+                }
                 break;
             case UIPanel.Prestige:
-                if (_prestigePanel != null) _prestigePanel.SetActive(true);
+                if (_prestigePanel != null)
+                {
+                    _prestigePanel.SetActive(true);
+                    HidePanel(UIPanel.NormalUpgrades);
+                    HidePanel(UIPanel.PrestigeUpgrades);
+                }
                 break;
             case UIPanel.Settings:
                 if (_settingsPanel != null) _settingsPanel.SetActive(true);
@@ -1077,7 +1095,7 @@ public class UIManager : MonoBehaviour
         
         switch (panelType)
         {
-            case UIPanel.NormalUpgrades:
+            /* case UIPanel.NormalUpgrades:
                 isActive = _normalUpgradesPanel != null && _normalUpgradesPanel.activeSelf;
                 break;
             case UIPanel.PrestigeUpgrades:
@@ -1085,7 +1103,7 @@ public class UIManager : MonoBehaviour
                 break;
             case UIPanel.Prestige:
                 isActive = _prestigePanel != null && _prestigePanel.activeSelf;
-                break;
+                break; */
             case UIPanel.Settings:
                 isActive = _settingsPanel != null && _settingsPanel.activeSelf;
                 break;
