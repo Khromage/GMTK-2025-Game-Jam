@@ -51,38 +51,38 @@ public class UpgradeManager : MonoBehaviour
 
     public void LoadFromSaveData(SaveData saveData)
     {
-        // start fresh with current upgrade types all at level 0
+        // Start fresh with current upgrade types all at level 0
         InitializeUpgradeDictionaries();
 
-        // apply saved normal upgrades if they exist and are still valid
+        // Apply saved normal upgrades if they exist and are still valid
         if (saveData.normalUpgradeLevels != null)
         {
-            foreach (var kvp in saveData.normalUpgradeLevels)
+            foreach (var upgradeLevel in saveData.normalUpgradeLevels)
             {
-                // check to make sure upgrade still exists in game
-                if (_normalUpgradeLevels.ContainsKey(kvp.Key))
+                // Check to make sure upgrade still exists in game
+                if (_normalUpgradeLevels.ContainsKey(upgradeLevel.upgradeType))
                 {
-                    _normalUpgradeLevels[kvp.Key] = kvp.Value;
+                    _normalUpgradeLevels[upgradeLevel.upgradeType] = upgradeLevel.level;
                 }
                 else
                 {
-                    Debug.LogWarning($"Saved upgrade type {kvp.Key} no longer exists in game");
+                    Debug.LogWarning($"Saved upgrade type {upgradeLevel.upgradeType} no longer exists in game");
                 }
             }
         }
 
-        // same logic for prestige upgrades
+        // Same logic for prestige upgrades
         if (saveData.prestigeUpgradeLevels != null)
         {
-            foreach (var kvp in saveData.prestigeUpgradeLevels)
+            foreach (var upgradeLevel in saveData.prestigeUpgradeLevels)
             {
-                if (_prestigeUpgradeLevels.ContainsKey(kvp.Key))
+                if (_prestigeUpgradeLevels.ContainsKey(upgradeLevel.upgradeType))
                 {
-                    _prestigeUpgradeLevels[kvp.Key] = kvp.Value;
+                    _prestigeUpgradeLevels[upgradeLevel.upgradeType] = upgradeLevel.level;
                 }
                 else
                 {
-                    Debug.LogWarning($"Saved prestige upgrade type {kvp.Key} no longer exists in game");
+                    Debug.LogWarning($"Saved prestige upgrade type {upgradeLevel.upgradeType} no longer exists in game");
                 }
             }
         }
@@ -278,8 +278,25 @@ public class UpgradeManager : MonoBehaviour
     public int GetNormalUpgradeLevel(UpgradeType upgradeType) => _normalUpgradeLevels.GetValueOrDefault(upgradeType, 0);
     public int GetPrestigeUpgradeLevel(PrestigeUpgradeType upgradeType) => _prestigeUpgradeLevels.GetValueOrDefault(upgradeType, 0);
 
-    public Dictionary<UpgradeType, int> GetNormalUpgradeLevels() => new Dictionary<UpgradeType, int>(_normalUpgradeLevels);
-    public Dictionary<PrestigeUpgradeType, int> GetPrestigeUpgradeLevels() => new Dictionary<PrestigeUpgradeType, int>(_prestigeUpgradeLevels);
+    public List<SerializableUpgradeLevel> GetNormalUpgradeLevels()
+    {
+        List<SerializableUpgradeLevel> upgradeLevels = new List<SerializableUpgradeLevel>();
+        foreach (var kvp in _normalUpgradeLevels)
+        {
+            upgradeLevels.Add(new SerializableUpgradeLevel(kvp.Key, kvp.Value));
+        }
+        return upgradeLevels;
+    }
+
+    public List<SerializablePrestigeUpgradeLevel> GetPrestigeUpgradeLevels()
+    {
+        List<SerializablePrestigeUpgradeLevel> upgradeLevels = new List<SerializablePrestigeUpgradeLevel>();
+        foreach (var kvp in _prestigeUpgradeLevels)
+        {
+            upgradeLevels.Add(new SerializablePrestigeUpgradeLevel(kvp.Key, kvp.Value));
+        }
+        return upgradeLevels;
+    }
     
     // called on prestige
     public void ResetNormalUpgrades()
@@ -290,5 +307,31 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+}
 
+
+[System.Serializable]
+public class SerializableUpgradeLevel
+{
+    public UpgradeType upgradeType;
+    public int level;
+    
+    public SerializableUpgradeLevel(UpgradeType type, int lvl)
+    {
+        upgradeType = type;
+        level = lvl;
+    }
+}
+
+[System.Serializable]
+public class SerializablePrestigeUpgradeLevel
+{
+    public PrestigeUpgradeType upgradeType;
+    public int level;
+    
+    public SerializablePrestigeUpgradeLevel(PrestigeUpgradeType type, int lvl)
+    {
+        upgradeType = type;
+        level = lvl;
+    }
 }

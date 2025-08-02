@@ -9,8 +9,8 @@ public class SaveData
     public int favors = 0;
 
     [Header("Upgrade Levels")]
-    public Dictionary<UpgradeType, int> normalUpgradeLevels = new Dictionary<UpgradeType, int>();
-    public Dictionary<PrestigeUpgradeType, int> prestigeUpgradeLevels = new Dictionary<PrestigeUpgradeType, int>();
+    public List<SerializableUpgradeLevel> normalUpgradeLevels = new List<SerializableUpgradeLevel>();
+    public List<SerializablePrestigeUpgradeLevel> prestigeUpgradeLevels = new List<SerializablePrestigeUpgradeLevel>();
 
     [Header("Progress")]
     public float currentDistance = 0f;

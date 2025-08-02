@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public class SaveManager : MonoBehaviour
 {
@@ -114,19 +115,19 @@ public class SaveManager : MonoBehaviour
 
     private float CalculateAutoClickRateFromSave(SaveData saveData)
     {
-        // Reconstruct auto-click rate from saved upgrade levels
-        int determinationLevel = saveData.normalUpgradeLevels.GetValueOrDefault(UpgradeType.Determination, 0);
+        // Reconstruct auto-click rate from saved upgrade levels using new list format
+        int determinationLevel = GetUpgradeLevelFromList(saveData.normalUpgradeLevels, UpgradeType.Determination);
         return determinationLevel * 0.5f; // 0.5 clicks per second per level (example)
     }
 
     private float CalculateAutoPushPowerFromSave(SaveData saveData)
     {
-        // Reconstruct auto-push power from saved upgrade levels
-        int muscleLevel = saveData.normalUpgradeLevels.GetValueOrDefault(UpgradeType.StrongerMuscles, 0);
+        // Reconstruct auto-push power from saved upgrade levels using new list format
+        int muscleLevel = GetUpgradeLevelFromList(saveData.normalUpgradeLevels, UpgradeType.StrongerMuscles);
         float basePower = 1f + (muscleLevel * 1f); // 1 power per level (example)
 
         // Apply prestige multipliers
-        int herculesLevel = saveData.prestigeUpgradeLevels.GetValueOrDefault(PrestigeUpgradeType.MightOfHercules, 0);
+        int herculesLevel = GetPrestigeUpgradeLevelFromList(saveData.prestigeUpgradeLevels, PrestigeUpgradeType.MightOfHercules);
         float prestigeMultiplier = 1f + (herculesLevel * 0.5f);
 
         return basePower * prestigeMultiplier;
@@ -138,8 +139,8 @@ public class SaveManager : MonoBehaviour
         {
             grit = 0,
             favors = 0,
-            normalUpgradeLevels = new Dictionary<UpgradeType, int>(),
-            prestigeUpgradeLevels = new Dictionary<PrestigeUpgradeType, int>(),
+            normalUpgradeLevels = new List<SerializableUpgradeLevel>(),
+            prestigeUpgradeLevels = new List<SerializablePrestigeUpgradeLevel>(),
             currentDistance = 0f,
             currentSlope = 1f,
             comboState = new ComboState(),
@@ -184,7 +185,7 @@ public class SaveManager : MonoBehaviour
 
     private string EncryptData(string data)
     {
-        // Simple encryption implementation (you might want something more robust)
+        // Simple encryption implementation
         byte[] dataBytes = System.Text.Encoding.UTF8.GetBytes(data);
         return System.Convert.ToBase64String(dataBytes);
     }
@@ -196,13 +197,20 @@ public class SaveManager : MonoBehaviour
         return System.Text.Encoding.UTF8.GetString(dataBytes);
     }
 
-    public int GetValueOrDefault(Dictionary<UpgradeType, int> dictionary, UpgradeType key, int defaultValue = 0)
+    private int GetUpgradeLevelFromList(List<SerializableUpgradeLevel> upgradeLevels, UpgradeType upgradeType)
     {
-        return dictionary != null && dictionary.ContainsKey(key) ? dictionary[key] : defaultValue;
+        if (upgradeLevels == null) return 0;
+        
+        var upgradeLevel = upgradeLevels.FirstOrDefault(x => x.upgradeType == upgradeType);
+        return upgradeLevel?.level ?? 0;
     }
     
-    public int GetValueOrDefault(Dictionary<PrestigeUpgradeType, int> dictionary, PrestigeUpgradeType key, int defaultValue = 0)
+    private int GetPrestigeUpgradeLevelFromList(List<SerializablePrestigeUpgradeLevel> upgradeLevels, PrestigeUpgradeType upgradeType)
     {
-        return dictionary != null && dictionary.ContainsKey(key) ? dictionary[key] : defaultValue;
+        if (upgradeLevels == null) return 0;
+        
+        var upgradeLevel = upgradeLevels.FirstOrDefault(x => x.upgradeType == upgradeType);
+        return upgradeLevel?.level ?? 0;
     }
+
 }
