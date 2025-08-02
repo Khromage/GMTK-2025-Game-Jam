@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class ProgressManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class ProgressManager : MonoBehaviour
     public UnityAction<float> OnDistanceChanged;
     public UnityAction<float> OnSlopeChanged;
     public UnityAction<ComboState> OnComboStateChanged;
+    private List<Push> _comboPushes = new List<Push>();
     public UnityAction<bool> OnCriticalHit;
 
     // public getters for private values/data
@@ -40,9 +42,7 @@ public class ProgressManager : MonoBehaviour
         // initialize combo state
         _comboState = new ComboState
         {
-            CurrentCombo = 0,
             ComboTimer = 0f,
-            SpeedThreshold = 1f,
             Multiplier = 1f,
             IsActive = false
         };
@@ -54,9 +54,7 @@ public class ProgressManager : MonoBehaviour
         _currentSlope = 1f;
         _comboState = new ComboState
         {
-            CurrentCombo = 0,
             ComboTimer = 0f,
-            SpeedThreshold = 1f,
             Multiplier = 1f,
             IsActive = false
         };
@@ -164,24 +162,25 @@ public class ProgressManager : MonoBehaviour
 
     private void UpdateComboState(float pushPower)
     {
+        _comboPushes.Add(new Push(pushPower, 1f));
+
+        float sumPushPower = 0f;
+        foreach (Push p in _comboPushes)
+        {
+            sumPushPower += p.power;
+        }
+
         float speedThreshold = 15f; // Base threshold, can be modified by upgrades
 
         // maybe instead of pushPower here we use collective manual + auto push power over the past second
-        if (pushPower >= speedThreshold)
+        if (sumPushPower >= speedThreshold)
         {
-            _comboState.CurrentCombo++;
             _comboState.ComboTimer = _maxComboTime; // Reset timer
             _comboState.IsActive = true;
-            _comboState.Multiplier = CalculateComboMultiplier();
+            _comboState.Multiplier = _upgradeManager.GetMomentumMultiplier();
         }
 
         NotifyComboStateChanged();
-    }
-
-    private float CalculateComboMultiplier()
-    {
-        float baseMultiplier = _upgradeManager.GetMomentumMultiplier();
-        return baseMultiplier + (_comboState.CurrentCombo * 0.1f); // 10% per combo level
     }
 
     private float GetCurrentComboMultiplier()
@@ -191,7 +190,6 @@ public class ProgressManager : MonoBehaviour
 
     private void ResetCombo()
     {
-        _comboState.CurrentCombo = 0;
         _comboState.ComboTimer = 0f;
         _comboState.IsActive = false;
         _comboState.Multiplier = 1f;
@@ -241,6 +239,13 @@ public class ProgressManager : MonoBehaviour
     
     void Update()
     {
+        foreach (Push p in _comboPushes)
+        {
+            p.timer -= Time.deltaTime;
+            if (p.timer <= 0)
+                _comboPushes.Remove(p);
+        }
+
         // Update combo timer
         if (_comboState.IsActive && _comboState.ComboTimer > 0f)
         {
@@ -252,4 +257,15 @@ public class ProgressManager : MonoBehaviour
         }
     }
 
+}
+
+public class Push
+{
+    public Push(float _power, float _timer)
+    {
+        power = _power;
+        timer = _timer;
+    }
+    public float power;
+    public float timer;
 }

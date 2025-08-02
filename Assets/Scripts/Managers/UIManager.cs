@@ -21,7 +21,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Combo UI")]
     [SerializeField] private GameObject _comboPanel;
-    [SerializeField] private TextMeshProUGUI _comboCountText; // prob dont need
     [SerializeField] private TextMeshProUGUI _comboMultiplierText;
     [SerializeField] private Slider _comboTimerSlider;
     [SerializeField] private Image _comboTimerFill;
@@ -487,11 +486,6 @@ public class UIManager : MonoBehaviour
 
             if (comboState.IsActive)
             {
-                if (_comboCountText != null)
-                {
-                    _comboCountText.text = $"Combo: {comboState.CurrentCombo}"; // dont need
-                }
-
                 if (_comboMultiplierText != null)
                 {
                     _comboMultiplierText.text = $"{comboState.Multiplier:F1}x";
