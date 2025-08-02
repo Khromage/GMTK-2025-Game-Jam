@@ -35,7 +35,13 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void UpdateLevel(int level)
     {
-        if (_levelText != null) _levelText.text = $"Level {level}";
+        if (_levelText != null)
+        {
+            _levelText.text = $"Level {level}";
+            UpgradeData data = _upgradeDataSO.GetNormalUpgrade(_upgradeType);
+            if (level >= data.MaxLevel && !data.IsInfinite)
+                _maxLevelIndicator.SetActive(true);
+        }
     }
 
     public void UpdateCost(int cost)
@@ -64,7 +70,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void PlayPurchaseAnimation()
     {
-        StartCoroutine(PulseAnimation());
+        //StartCoroutine(PulseAnimation());
     }
 
     public void PlayUnlockAnimation()

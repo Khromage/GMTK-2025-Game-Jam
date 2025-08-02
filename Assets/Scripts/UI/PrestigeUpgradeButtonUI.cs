@@ -33,7 +33,13 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
     
     public void UpdateLevel(int level)
     {
-        if (_levelText != null) _levelText.text = $"Level {level}";
+        if (_levelText != null)
+        {
+            _levelText.text = $"Level {level}";
+            PrestigeUpgradeData data = _upgradeDataSO.GetPrestigeUpgrade(_upgradeType);
+            if (level >= data.MaxLevel)
+                _maxLevelIndicator.SetActive(true);
+        }
     }
     
     public void UpdateCost(int cost)
@@ -55,7 +61,7 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
     
     public void PlayPurchaseAnimation()
     {
-        StartCoroutine(PulseAnimation());
+        //StartCoroutine(PulseAnimation());
     }
     
     private void OnButtonClick()

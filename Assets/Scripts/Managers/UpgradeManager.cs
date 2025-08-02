@@ -168,6 +168,11 @@ public class UpgradeManager : MonoBehaviour
             OnUpgradeUnlocked?.Invoke(upgradeType, wasUnlocked);
         }
     }
+    public void ManualCheckUnlocks()
+    {
+        Debug.Log("[UpgradeManager] ManualCheckUnlocks called");
+        CheckUpgradeUnlocks();
+    }
 
     private bool IsNormalUpgradeUnlocked(UpgradeType upgradeType)
     {

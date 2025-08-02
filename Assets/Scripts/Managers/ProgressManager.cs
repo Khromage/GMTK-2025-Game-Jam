@@ -239,11 +239,13 @@ public class ProgressManager : MonoBehaviour
     
     void Update()
     {
-        foreach (Push p in _comboPushes)
+        for (int i = _comboPushes.Count - 1; i >= 0; i--)
         {
-            p.timer -= Time.deltaTime;
-            if (p.timer <= 0)
-                _comboPushes.Remove(p);
+            _comboPushes[i].timer -= Time.deltaTime;
+            if (_comboPushes[i].timer <= 0)
+            {
+                _comboPushes.RemoveAt(i);
+            }
         }
 
         // Update combo timer

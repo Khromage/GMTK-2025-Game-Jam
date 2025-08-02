@@ -362,42 +362,18 @@ public class UIManager : MonoBehaviour
 
     private void HandleGritChanged(int newGrit)
     {
-        if (_gritAnimationCoroutine != null)
-        {
-            StopCoroutine(_gritAnimationCoroutine);
-        }
-
-        _gritAnimationCoroutine = StartCoroutine(AnimateCurrencyChange(_gritText, _displayedGrit, newGrit,
-            (value) => _displayedGrit = value));
+        _gritText.text = FormatCurrency(newGrit);
 
         // Update upgrade button affordability
         UpdateUpgradeButtonAffordability();
-
-        // Play currency gain effect if increased
-        if (newGrit > _displayedGrit)
-        {
-            PlayCurrencyGainEffect(_gritIcon.transform, newGrit - _displayedGrit);
-        }
     }
 
     private void HandleFavorsChanged(int newFavors)
     {
-        if (_favorsAnimationCoroutine != null)
-        {
-            StopCoroutine(_favorsAnimationCoroutine);
-        }
-
-        _favorsAnimationCoroutine = StartCoroutine(AnimateCurrencyChange(_favorsText, _displayedFavors, newFavors,
-            (value) => _displayedFavors = value));
+        _favorsText.text = FormatCurrency(newFavors);
 
         // Update prestige upgrade button affordability
         UpdatePrestigeUpgradeButtonAffordability();
-
-        // Play currency gain effect if increased
-        if (newFavors > _displayedFavors)
-        {
-            PlayCurrencyGainEffect(_favorsIcon.transform, newFavors - _displayedFavors);
-        }
     }
 
     #endregion
@@ -837,7 +813,7 @@ public class UIManager : MonoBehaviour
 
     #region UI Animation Methods
 
-    private IEnumerator AnimateCurrencyChange(TextMeshProUGUI textComponent, int startValue, int endValue, System.Action<int> onValueUpdate)
+    /* private IEnumerator AnimateCurrencyChange(TextMeshProUGUI textComponent, int startValue, int endValue, System.Action<int> onValueUpdate)
     {
         float elapsedTime = 0f;
         
@@ -868,7 +844,7 @@ public class UIManager : MonoBehaviour
         {
             textComponent.text = FormatCurrency(endValue);
         }
-    }
+    } */
     
     private IEnumerator AnimateComboTimer(float maxTime)
     {
@@ -892,7 +868,7 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private void PlayCurrencyGainEffect(Transform iconTransform, int amount)
+    /* private void PlayCurrencyGainEffect(Transform iconTransform, int amount)
     {
         // Simple scale animation for currency icons
         if (iconTransform != null)
@@ -927,7 +903,7 @@ public class UIManager : MonoBehaviour
         }
         
         target.localScale = originalScale;
-    }
+    } */
 
     #endregion
 
