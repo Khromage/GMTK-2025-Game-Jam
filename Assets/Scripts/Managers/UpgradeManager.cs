@@ -244,6 +244,32 @@ public class UpgradeManager : MonoBehaviour
         return 1f + (momentumLevel * momentumData.EffectData.ValuePerLevel);
     }
 
+    public float GetHerculesMultiplier()
+    {
+        int herculesLevel = GetPrestigeUpgradeLevel(PrestigeUpgradeType.MightOfHercules);
+        PrestigeUpgradeData herculesData = _upgradeDataSO.GetPrestigeUpgrade(PrestigeUpgradeType.MightOfHercules);
+        return 1f + (herculesLevel * herculesData.EffectData.ValuePerLevel);
+    }
+
+    public float GetAtlasMultiplier()
+    {
+        int atlasLevel = GetPrestigeUpgradeLevel(PrestigeUpgradeType.HandsOfAtlas);
+        PrestigeUpgradeData atlasData = _upgradeDataSO.GetPrestigeUpgrade(PrestigeUpgradeType.HandsOfAtlas);
+        return 1f + (atlasLevel * atlasData.EffectData.ValuePerLevel);
+    }
+    public float GetGaiaMultiplier()
+    {
+        int gaiaLevel = GetPrestigeUpgradeLevel(PrestigeUpgradeType.BlessingOfGaia);
+        PrestigeUpgradeData gaiaData = _upgradeDataSO.GetPrestigeUpgrade(PrestigeUpgradeType.BlessingOfGaia);
+        return 1f + (gaiaLevel * gaiaData.EffectData.ValuePerLevel);
+    }
+    public float GetHermesMultiplier()
+    {
+        int hermesLevel = GetPrestigeUpgradeLevel(PrestigeUpgradeType.EchoesOfHermes);
+        PrestigeUpgradeData hermesData = _upgradeDataSO.GetPrestigeUpgrade(PrestigeUpgradeType.EchoesOfHermes);
+        return 1f + (hermesLevel * hermesData.EffectData.ValuePerLevel);
+    }
+
     public int GetNormalUpgradeLevel(UpgradeType upgradeType) => _normalUpgradeLevels.GetValueOrDefault(upgradeType, 0);
     public int GetPrestigeUpgradeLevel(PrestigeUpgradeType upgradeType) => _prestigeUpgradeLevels.GetValueOrDefault(upgradeType, 0);
 
