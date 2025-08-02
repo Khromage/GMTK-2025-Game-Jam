@@ -263,13 +263,13 @@ public class UpgradeManager : MonoBehaviour
         PrestigeUpgradeData gaiaData = _upgradeDataSO.GetPrestigeUpgrade(PrestigeUpgradeType.BlessingOfGaia);
         return 1f + (gaiaLevel * gaiaData.EffectData.ValuePerLevel);
     }
-    public float GetHermesMultiplier()
+    /* public float GetHermesMultiplier()
     {
         int hermesLevel = GetPrestigeUpgradeLevel(PrestigeUpgradeType.EchoesOfHermes);
         PrestigeUpgradeData hermesData = _upgradeDataSO.GetPrestigeUpgrade(PrestigeUpgradeType.EchoesOfHermes);
         return 1f + (hermesLevel * hermesData.EffectData.ValuePerLevel);
     }
-
+ */
     public int GetNormalUpgradeLevel(UpgradeType upgradeType) => _normalUpgradeLevels.GetValueOrDefault(upgradeType, 0);
     public int GetPrestigeUpgradeLevel(PrestigeUpgradeType upgradeType) => _prestigeUpgradeLevels.GetValueOrDefault(upgradeType, 0);
 

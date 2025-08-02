@@ -6,6 +6,6 @@ public enum UpgradeType
     Momentum,
     SleightOfForce,
     TitanicForce,
-    MomentOfClarity
+    // MomentOfClarity
 }
 
