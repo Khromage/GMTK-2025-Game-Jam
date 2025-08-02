@@ -147,14 +147,14 @@ public class UpgradeManager : MonoBehaviour
     }
 
     // normals scale exponentially atm
-    private int CalculateNormalUpgradeCost(UpgradeType upgradeType, int currentLevel)
+    public int CalculateNormalUpgradeCost(UpgradeType upgradeType, int currentLevel)
     {
         UpgradeData upgradeData = _upgradeDataSO.GetNormalUpgrade(upgradeType);
         return Mathf.RoundToInt(upgradeData.BaseCost * Mathf.Pow(upgradeData.CostMultiplier, currentLevel));
     }
 
     // prestiges scale linearly atm
-    private int CalculatePrestigeUpgradeCost(PrestigeUpgradeType upgradeType, int currentLevel)
+    public int CalculatePrestigeUpgradeCost(PrestigeUpgradeType upgradeType, int currentLevel)
     {
         PrestigeUpgradeData upgradeData = _upgradeDataSO.GetPrestigeUpgrade(upgradeType);
         return upgradeData.BaseCost + (currentLevel * upgradeData.CostIncrease);

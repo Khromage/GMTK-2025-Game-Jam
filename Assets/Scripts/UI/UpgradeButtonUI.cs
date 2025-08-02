@@ -27,7 +27,7 @@ public class UpgradeButtonUI : MonoBehaviour
         if (_nameText != null) _nameText.text = upgradeType.ToString();
         if (_button != null) _button.onClick.AddListener(OnButtonClick);
 
-        UpdateDisplay();
+        UpdateDisplay(); // any fields that need to be populated at init and never change
     }
 
     public void UpdateLevel(int level)
@@ -89,7 +89,10 @@ public class UpgradeButtonUI : MonoBehaviour
 
     private void UpdateDisplay()
     {
-        // Initial display setup - values will be updated by UIManager
+        // Initial display setup for static fields
+        // description
+
+        // any values that need updating will be hanlded by UIManager
     }
 
     private IEnumerator PulseAnimation()

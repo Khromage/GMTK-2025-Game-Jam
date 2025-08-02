@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Combo UI")]
     [SerializeField] private GameObject _comboPanel;
-    [SerializeField] private TextMeshProUGUI _comboCountText;
+    [SerializeField] private TextMeshProUGUI _comboCountText; // prob dont need
     [SerializeField] private TextMeshProUGUI _comboMultiplierText;
     [SerializeField] private Slider _comboTimerSlider;
     [SerializeField] private Image _comboTimerFill;
@@ -46,8 +46,8 @@ public class UIManager : MonoBehaviour
     [Header("Boulder UI")]
     [SerializeField] private GameObject _boulderClickEffect;
     [SerializeField] private GameObject _criticalHitEffect;
-    [SerializeField] private Transform _damageNumberParent;
-    [SerializeField] private GameObject _damageNumberPrefab;
+    [SerializeField] private Transform _criticalTextParent;
+    [SerializeField] private GameObject _criticalTextPrefab;
 
     [Header("Notification UI")]
     [SerializeField] private GameObject _notificationPanel;
@@ -489,7 +489,7 @@ public class UIManager : MonoBehaviour
             {
                 if (_comboCountText != null)
                 {
-                    _comboCountText.text = $"Combo: {comboState.CurrentCombo}";
+                    _comboCountText.text = $"Combo: {comboState.CurrentCombo}"; // dont need
                 }
 
                 if (_comboMultiplierText != null)
@@ -530,7 +530,7 @@ public class UIManager : MonoBehaviour
             Destroy(critEffect, 2f);
 
             // Show floating damage number
-            ShowDamageNumber("CRITICAL!", Color.yellow, 1.5f);
+            ShowCriticalText("CRITICAL!", Color.yellow, 1.5f);
         }
     }
 
@@ -953,20 +953,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowDamageNumber(string text, Color color, float scale = 1f)
+    public void ShowCriticalText(string text, Color color, float scale = 1f)
     {
-        if (_damageNumberPrefab != null && _damageNumberParent != null)
+        if (_criticalTextPrefab != null && _criticalTextParent != null)
         {
-            GameObject damageNumberObj = Instantiate(_damageNumberPrefab, _damageNumberParent);
-            DamageNumberUI damageNumber = damageNumberObj.GetComponent<DamageNumberUI>();
+            GameObject criticalTextObj = Instantiate(_criticalTextPrefab, _criticalTextParent);
+            CriticalTextUI criticalText = criticalTextObj.GetComponent<CriticalTextUI>();
 
-            if (damageNumber != null)
+            if (criticalText != null)
             {
-                damageNumber.Initialize(text, color, scale);
+                criticalText.Initialize(text, color, scale);
             }
 
             // Auto-destroy after animation
-            Destroy(damageNumberObj, 2f);
+            Destroy(criticalTextObj, 2f);
         }
     }
 
@@ -1149,18 +1149,16 @@ public class UIManager : MonoBehaviour
     
     private int CalculateUpgradeCost(UpgradeType upgradeType)
     {
-        // This should delegate to UpgradeManager's cost calculation
-        // For now, using placeholder logic
         int currentLevel = _upgradeManager.GetNormalUpgradeLevel(upgradeType);
-        return Mathf.RoundToInt(10 * Mathf.Pow(1.5f, currentLevel));
+        int cost = _upgradeManager.CalculateNormalUpgradeCost(upgradeType, currentLevel);
+        return cost;
     }
     
     private int CalculatePrestigeUpgradeCost(PrestigeUpgradeType upgradeType)
     {
-        // This should delegate to UpgradeManager's cost calculation
-        // For now, using placeholder logic
         int currentLevel = _upgradeManager.GetPrestigeUpgradeLevel(upgradeType);
-        return 1 + (currentLevel * 1);
+        int cost = _upgradeManager.CalculatePrestigeUpgradeCost(upgradeType, currentLevel);
+        return cost;
     }
 
     // Public methods for button UI components to call
@@ -1186,7 +1184,7 @@ public class UIManager : MonoBehaviour
             ComboState comboState = _progressManager.GetComboState();
             if (comboState.IsActive && _comboTimerSlider != null)
             {
-                float progress = comboState.ComboTimer / 5f; // Assuming 5 second combo timer
+                float progress = comboState.ComboTimer / _progressManager.GetMaxComboTime();
                 _comboTimerSlider.value = progress;
             }
         }

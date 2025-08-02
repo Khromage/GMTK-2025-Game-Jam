@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 
 // Damage number UI component
-public class DamageNumberUI : MonoBehaviour
+public class CriticalTextUI : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI _text;

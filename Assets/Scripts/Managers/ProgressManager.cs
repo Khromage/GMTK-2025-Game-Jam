@@ -7,6 +7,7 @@ public class ProgressManager : MonoBehaviour
     [SerializeField] private float _currentDistance = 0f;
     [SerializeField] private float _currentSlope = 1f;
     [SerializeField] private ComboState _comboState = new ComboState();
+    [SerializeField] private float _maxComboTime = 5f; 
 
     [Header("Push Configuration")]
     [SerializeField] private float _basePushPower = 1f;
@@ -24,6 +25,7 @@ public class ProgressManager : MonoBehaviour
     public float GetCurrentDistance() => _currentDistance;
     public float GetCurrentSlope() => _currentSlope;
     public ComboState GetComboState() => _comboState;
+    public float GetMaxComboTime() => _maxComboTime;
 
     public void Initialize(UpgradeManager upgradeManager)
     {
@@ -168,7 +170,7 @@ public class ProgressManager : MonoBehaviour
         if (pushPower >= speedThreshold)
         {
             _comboState.CurrentCombo++;
-            _comboState.ComboTimer = 5f; // Reset timer
+            _comboState.ComboTimer = _maxComboTime; // Reset timer
             _comboState.IsActive = true;
             _comboState.Multiplier = CalculateComboMultiplier();
         }
