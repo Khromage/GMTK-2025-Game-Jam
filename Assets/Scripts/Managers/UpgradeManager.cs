@@ -174,7 +174,7 @@ public class UpgradeManager : MonoBehaviour
         CheckUpgradeUnlocks();
     }
 
-    private bool IsNormalUpgradeUnlocked(UpgradeType upgradeType)
+    public bool IsNormalUpgradeUnlocked(UpgradeType upgradeType)
     {
         UpgradeData upgradeData = _upgradeDataSO.GetNormalUpgrade(upgradeType);
 

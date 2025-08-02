@@ -127,6 +127,115 @@ public class UIManager : MonoBehaviour
         //Debug.Log("UIManager initialized successfully");
     }
 
+    #region NEW: Post-Load Refresh Methods
+
+    public void RefreshUIAfterLoad()
+    {
+        Debug.Log("[UIManager] Refreshing UI after save data loaded");
+        
+        // Update all currency displays
+        RefreshCurrencyDisplay();
+        
+        // Update all upgrade button states
+        RefreshAllUpgradeButtons();
+        
+        // Update progress displays
+        RefreshProgressDisplay();
+        
+        // Update prestige displays
+        RefreshPrestigeDisplay();
+        
+        // Check upgrade unlocks
+        RefreshUpgradeUnlocks();
+    }
+
+    private void RefreshCurrencyDisplay()
+    {
+        if (_currencyManager != null)
+        {
+            _displayedGrit = _currencyManager.GetGrit();
+            _displayedFavors = _currencyManager.GetFavors();
+            
+            if (_gritText != null) _gritText.text = FormatCurrency(_displayedGrit);
+            if (_favorsText != null) _favorsText.text = FormatCurrency(_displayedFavors);
+        }
+    }
+
+    private void RefreshAllUpgradeButtons()
+    {
+        // Refresh normal upgrade buttons
+        foreach (var kvp in _normalUpgradeButtons)
+        {
+            UpgradeType upgradeType = kvp.Key;
+            UpgradeButtonUI buttonUI = kvp.Value;
+            
+            int level = _upgradeManager.GetNormalUpgradeLevel(upgradeType);
+            int cost = _upgradeManager.CalculateNormalUpgradeCost(upgradeType, level);
+            bool canAfford = _currencyManager.GetGrit() >= cost;
+            
+            buttonUI.UpdateLevel(level);
+            buttonUI.UpdateCost(cost);
+            buttonUI.SetAffordable(canAfford);
+        }
+        
+        // Refresh prestige upgrade buttons
+        foreach (var kvp in _prestigeUpgradeButtons)
+        {
+            PrestigeUpgradeType upgradeType = kvp.Key;
+            PrestigeUpgradeButtonUI buttonUI = kvp.Value;
+            
+            int level = _upgradeManager.GetPrestigeUpgradeLevel(upgradeType);
+            int cost = _upgradeManager.CalculatePrestigeUpgradeCost(upgradeType, level);
+            bool canAfford = _currencyManager.GetFavors() >= cost;
+            
+            buttonUI.UpdateLevel(level);
+            buttonUI.UpdateCost(cost);
+            buttonUI.SetAffordable(canAfford);
+        }
+    }
+
+    private void RefreshProgressDisplay()
+    {
+        if (_progressManager != null)
+        {
+            HandleDistanceChanged(_progressManager.GetCurrentDistance());
+            HandleSlopeChanged(_progressManager.GetCurrentSlope());
+            HandleComboStateChanged(_progressManager.GetComboState());
+        }
+    }
+
+    private void RefreshPrestigeDisplay()
+    {
+        if (_prestigeManager != null)
+        {
+            UpdatePrestigeButton();
+            UpdatePrestigeCount();
+            
+            // Update prestige availability indicator
+            bool canPrestige = _prestigeManager.CanPrestige();
+            if (_prestigeAvailableIndicator != null)
+            {
+                _prestigeAvailableIndicator.SetActive(canPrestige);
+            }
+        }
+    }
+
+    private void RefreshUpgradeUnlocks()
+    {
+        // Check and update unlock status for all normal upgrades
+        foreach (UpgradeType upgradeType in System.Enum.GetValues(typeof(UpgradeType)))
+        {
+            if (_normalUpgradeButtons.TryGetValue(upgradeType, out UpgradeButtonUI buttonUI))
+            {
+                bool isUnlocked = _upgradeManager.IsNormalUpgradeUnlocked(upgradeType);
+                buttonUI.SetUnlocked(isUnlocked);
+            }
+        }
+    }
+
+    #endregion
+
+
     #region Initialization Methods
 
     private void InitializeUpgradeButtons()
@@ -138,7 +247,7 @@ public class UIManager : MonoBehaviour
             {
                 GameObject buttonObj = Instantiate(_upgradeButtonPrefab, _normalUpgradeContainer);
                 UpgradeButtonUI buttonUI = buttonObj.GetComponent<UpgradeButtonUI>();
-                
+
                 if (buttonUI != null)
                 {
                     buttonUI.Initialize(upgradeType, this);
@@ -146,7 +255,7 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
-        
+
         // Create prestige upgrade buttons
         foreach (PrestigeUpgradeType upgradeType in System.Enum.GetValues(typeof(PrestigeUpgradeType)))
         {
@@ -154,7 +263,7 @@ public class UIManager : MonoBehaviour
             {
                 GameObject buttonObj = Instantiate(_prestigeUpgradeButtonPrefab, _prestigeUpgradeContainer);
                 PrestigeUpgradeButtonUI buttonUI = buttonObj.GetComponent<PrestigeUpgradeButtonUI>();
-                
+
                 if (buttonUI != null)
                 {
                     buttonUI.Initialize(upgradeType, this);
