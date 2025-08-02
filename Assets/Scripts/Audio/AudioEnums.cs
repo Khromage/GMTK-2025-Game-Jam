@@ -9,6 +9,8 @@ public enum SFXType
     RockSlide,
     Footstep,
     FallingPebble,
+    MenuOpen,
+    MenuClose
 }
 
 public enum MusicType

@@ -73,7 +73,7 @@ public class AudioManager : MonoBehaviour
         // Apply initial volume settings
         ApplyVolumeSettings();
 
-        Debug.Log("AudioManager initialized successfully");
+        //Debug.Log("AudioManager initialized successfully");
     }
 
     private void InitializeAudioSources()
@@ -445,13 +445,13 @@ public class AudioManager : MonoBehaviour
 
     private void LoadAudioSettings()
     {
-        _masterVolume = PlayerPrefs.GetFloat("Audio_MasterVolume", 1f);
-        _sfxVolume = PlayerPrefs.GetFloat("Audio_SFXVolume", 1f);
-        _musicVolume = PlayerPrefs.GetFloat("Audio_MusicVolume", 1f);
-        _ambientVolume = PlayerPrefs.GetFloat("Audio_AmbientVolume", 1f);
-        _musicEnabled = PlayerPrefs.GetInt("Audio_MusicEnabled", 1) == 1;
-        _sfxEnabled = PlayerPrefs.GetInt("Audio_SFXEnabled", 1) == 1;
-        _ambientEnabled = PlayerPrefs.GetInt("Audio_AmbientEnabled", 1) == 1;
+        _masterVolume = PlayerPrefs.GetFloat("Audio_MasterVolume", _masterVolume);
+        _sfxVolume = PlayerPrefs.GetFloat("Audio_SFXVolume", _sfxVolume);
+        _musicVolume = PlayerPrefs.GetFloat("Audio_MusicVolume", _musicVolume);
+        _ambientVolume = PlayerPrefs.GetFloat("Audio_AmbientVolume", _ambientVolume);
+        _musicEnabled = PlayerPrefs.GetInt("Audio_MusicEnabled", _musicEnabled ? 1 : 0) == 1;
+        _sfxEnabled = PlayerPrefs.GetInt("Audio_SFXEnabled", _sfxEnabled ? 1 : 0) == 1;
+        _ambientEnabled = PlayerPrefs.GetInt("Audio_AmbientEnabled", _ambientEnabled ? 1 : 0) == 1;
     }
 
     #endregion

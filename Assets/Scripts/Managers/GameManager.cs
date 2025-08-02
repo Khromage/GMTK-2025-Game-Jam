@@ -55,9 +55,9 @@ public class GameManager : MonoBehaviour
         _progressManager.Initialize(_upgradeManager);
         _prestigeManager.Initialize(_currencyManager, _progressManager, _upgradeManager);
         _saveManager.Initialize();
-        _uiManager.Initialize(_currencyManager, _upgradeManager, _progressManager, _prestigeManager);
-        _inputManager.Initialize(_progressManager, _upgradeManager, _prestigeManager);
         _audioManager.Initialize();
+        _inputManager.Initialize(_progressManager, _upgradeManager, _prestigeManager);
+        _uiManager.Initialize(_currencyManager, _upgradeManager, _progressManager, _prestigeManager, _audioManager);
     }
     
     private void LoadGame()

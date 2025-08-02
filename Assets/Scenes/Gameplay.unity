@@ -899,9 +899,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioClipLibrary: {fileID: 11400000, guid: 13643375de6c3744f885189a5e2ffb81, type: 2}
-  _sfxMixerGroup: {fileID: 0}
-  _musicMixerGroup: {fileID: 0}
-  _ambientMixerGroup: {fileID: 0}
+  _sfxMixerGroup: {fileID: 4444710990960331587, guid: c1b2ade929caaee46be90cf590354ddc, type: 2}
+  _musicMixerGroup: {fileID: -2910840823567705303, guid: c1b2ade929caaee46be90cf590354ddc, type: 2}
+  _ambientMixerGroup: {fileID: -951359785026815528, guid: c1b2ade929caaee46be90cf590354ddc, type: 2}
   _musicAudioSource: {fileID: 0}
   _ambientAudioSource: {fileID: 0}
   _sfxAudioSourcePoolSize: 10
@@ -1090,6 +1090,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91796d6ad786a8745b03dc3908d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gritText: {fileID: 0}
+  _favorsText: {fileID: 0}
+  _gritIcon: {fileID: 0}
+  _favorsIcon: {fileID: 0}
+  _distanceText: {fileID: 0}
+  _slopeText: {fileID: 0}
+  _progressSlider: {fileID: 0}
+  _progressFill: {fileID: 0}
+  _progressPercentText: {fileID: 0}
+  _comboPanel: {fileID: 0}
+  _comboCountText: {fileID: 0}
+  _comboMultiplierText: {fileID: 0}
+  _comboTimerSlider: {fileID: 0}
+  _comboTimerFill: {fileID: 0}
+  _comboParticles: {fileID: 0}
+  _normalUpgradesPanel: {fileID: 0}
+  _prestigeUpgradesPanel: {fileID: 0}
+  _normalUpgradeContainer: {fileID: 0}
+  _prestigeUpgradeContainer: {fileID: 0}
+  _upgradeButtonPrefab: {fileID: 0}
+  _prestigeUpgradeButtonPrefab: {fileID: 0}
+  _prestigePanel: {fileID: 0}
+  _prestigeButton: {fileID: 0}
+  _prestigeRewardText: {fileID: 0}
+  _prestigeCountText: {fileID: 0}
+  _prestigeThresholdText: {fileID: 0}
+  _prestigeAvailableIndicator: {fileID: 0}
+  _boulderClickEffect: {fileID: 0}
+  _criticalHitEffect: {fileID: 0}
+  _damageNumberParent: {fileID: 0}
+  _damageNumberPrefab: {fileID: 0}
+  _notificationPanel: {fileID: 0}
+  _notificationContainer: {fileID: 0}
+  _notificationPrefab: {fileID: 0}
+  _notificationDisplayTime: 3
+  _mainMenuPanel: {fileID: 0}
+  _settingsPanel: {fileID: 0}
+  _pausePanel: {fileID: 0}
+  _settingsButton: {fileID: 0}
+  _pauseButton: {fileID: 0}
+  _masterVolumeSlider: {fileID: 0}
+  _sfxVolumeSlider: {fileID: 0}
+  _musicVolumeSlider: {fileID: 0}
+  _ambientVolumeSlider: {fileID: 0}
+  _musicToggle: {fileID: 0}
+  _sfxToggle: {fileID: 0}
+  _ambientToggle: {fileID: 0}
+  _masterVolumeText: {fileID: 0}
+  _sfxVolumeText: {fileID: 0}
+  _musicVolumeText: {fileID: 0}
+  _ambientVolumeText: {fileID: 0}
+  _currencyAnimationDuration: 0.5
+  _currencyAnimationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _upgradeButtonPulseScale: 1.1
+  _upgradeButtonPulseDuration: 0.3
 --- !u!1 &1492329747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,6 +1684,6 @@ SceneRoots:
   - {fileID: 511493173}
   - {fileID: 632073001}
   - {fileID: 1492329748}
-  - {fileID: 2004967635}
   - {fileID: 1678058338}
   - {fileID: 57117464}
+  - {fileID: 2004967635}
