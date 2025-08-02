@@ -1,0 +1,56 @@
+GAME ASSETS LICENSE ATTRIBUTION
+=====================================
+
+This game uses various assets under Creative Commons and other open licenses.
+Full attribution details are provided below:
+
+MUSIC & AUDIO
+-------------
+
+
+GRAPHICS & SPRITES
+------------------
+
+"Cave Boulder" by TheValar
+Licensed under CC BY 3.0 (Creative Commons Attribution 3.0 Unported)
+Source: https://opengameart.org/content/cave-boulder
+Modified: 
+
+
+
+FONTS
+-----
+
+
+TEXTURES
+--------
+
+
+
+OTHER ASSETS
+------------
+
+
+FULL LICENSE TEXTS
+==================
+
+CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+CC BY 2.0: https://creativecommons.org/licenses/by/2.0/
+CC BY 3.0: https://creativecommons.org/licenses/by/3.0/
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/
+CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/
+CC BY-NC 3.0: https://creativecommons.org/licenses/by-nc/3.0/
+SIL OFL 1.1: https://scripts.sil.org/OFL
+
+IMPORTANT NOTES
+===============
+
+1. Assets under CC BY-NC licenses restrict commercial distribution of this game.
+2. Assets under CC BY-SA licenses require derivative works to use compatible licenses.
+3. When redistributing or modifying this game, ensure compliance with all license terms.
+4. Some assets may have additional attribution requirements - check source links.
+
+Generated: August 2025
+Game: [Your Game Name]
+Developer: [Your Name/Studio]
