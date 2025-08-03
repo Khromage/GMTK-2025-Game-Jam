@@ -67,7 +67,7 @@ public class InputManager : MonoBehaviour
         //GameManager.Instance.AudioManager.PlaySFX(SFXType.BoulderPush);
     }
 
-    public void HandleUpgradeClick(UpgradeButton upgradeButton)
+    /* public void HandleUpgradeClick(UpgradeButtonUI upgradeButton)
     {
         Debug.Log($"upgrade button clicked. detected <<<{upgradeButton.GetUpgradeType()}>>> upgrade type");
 
@@ -85,7 +85,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void HandlePrestigeUpgradeClick(PrestigeUpgradeButton prestigeUpgradeButton)
+    public void HandlePrestigeUpgradeClick(PrestigeUpgradeButtonUI prestigeUpgradeButton)
     {
         PrestigeUpgradeType upgradeType = prestigeUpgradeButton.GetUpgradeType();
         bool success = _upgradeManager.PurchasePrestigeUpgrade(upgradeType);
@@ -99,7 +99,7 @@ public class InputManager : MonoBehaviour
         {
             //GameManager.Instance.AudioManager.PlaySFX(SFXType.UpgradeFailed);
         }
-    }
+    } */
 
     public void HandlePrestigeClick()
     {

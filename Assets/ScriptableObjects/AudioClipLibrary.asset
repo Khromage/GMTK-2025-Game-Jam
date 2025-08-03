@@ -12,6 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d27855d02883c44a70017e8f7d8754, type: 3}
   m_Name: AudioClipLibrary
   m_EditorClassIdentifier: 
-  _sfxClips: []
-  _musicClips: []
+  _sfxClips:
+  - SFXType: 0
+    Clip: {fileID: 8300000, guid: c9f82ce0faa8b9a4da83ba53a3df9924, type: 3}
+    Volume: 1
+    Pitch: 1
+    PitchVariation: 0
+    Is3D: 0
+    MaxDistance: 0
+    SpatialBlend: 0
+    RandomizePitch: 0
+    Priority: 0
+    Description: 
+  - SFXType: 2
+    Clip: {fileID: 8300000, guid: ec26e34428bf8134aa460f84b0e356b9, type: 3}
+    Volume: 1
+    Pitch: 1
+    PitchVariation: 0
+    Is3D: 0
+    MaxDistance: 0
+    SpatialBlend: 0
+    RandomizePitch: 0
+    Priority: 0
+    Description: 
+  _musicClips:
+  - MusicType: 1
+    Clip: {fileID: 8300000, guid: 6d24cb22e561dde4daa6d2165c4c4042, type: 3}
+    Volume: 1
+    Loop: 0
+    FadeIn: 0
+    FadeOut: 0
+    FadeTime: 3
+    IntroLength: 0
+    LoopStartTime: 0
+    Description: 
+  - MusicType: 2
+    Clip: {fileID: 8300000, guid: 929e2c5bbab1f0348a9e1bd78edd1a7f, type: 3}
+    Volume: 1
+    Loop: 0
+    FadeIn: 0
+    FadeOut: 0
+    FadeTime: 0
+    IntroLength: 0
+    LoopStartTime: 0
+    Description: 
   _ambientClips: []

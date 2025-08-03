@@ -19,6 +19,7 @@ public class UpgradeButtonUI : MonoBehaviour
     private UpgradeType _upgradeType;
     private UIManager _uiManager;
     private bool _isUnlocked = false;
+    private bool _isShaking = false;
 
     public void Initialize(UpgradeType upgradeType, UIManager uiManager)
     {
@@ -28,7 +29,7 @@ public class UpgradeButtonUI : MonoBehaviour
         if (_nameText != null) _nameText.text = _upgradeDataSO.GetNormalUpgrade(upgradeType).Name;
         if (_descriptionText != null) _descriptionText.text = _upgradeDataSO.GetNormalUpgrade(upgradeType).Description;
         if (_icon != null) _icon.sprite = _upgradeDataSO.GetNormalUpgrade(upgradeType).Icon;
-        
+
         if (_button != null) _button.onClick.AddListener(OnButtonClick);
 
     }
@@ -52,7 +53,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void UpdateCost(int cost)
     {
-        if (_costText != null) _costText.text = $"Cost: {cost}";
+        if (_costText != null) _costText.text = $"{cost}";
     }
 
     public void SetAffordable(bool affordable)
@@ -94,7 +95,7 @@ public class UpgradeButtonUI : MonoBehaviour
         if (_uiManager != null)
         {
             bool success = _uiManager.TryPurchaseNormalUpgrade(_upgradeType);
-            if (!success)
+            if (!success && !_isShaking)
             {
                 // Could play error sound or animation here
                 StartCoroutine(ShakeAnimation());
@@ -140,6 +141,8 @@ public class UpgradeButtonUI : MonoBehaviour
         float duration = 0.3f;
         float elapsed = 0f;
 
+        _isShaking = true;
+
         while (elapsed < duration)
         {
             float x = originalPosition.x + Random.Range(-shakeAmount, shakeAmount);
@@ -149,6 +152,7 @@ public class UpgradeButtonUI : MonoBehaviour
         }
 
         transform.localPosition = originalPosition;
+        _isShaking = false;
     }
 
     private IEnumerator ScaleToTarget(Vector3 targetScale, float duration)

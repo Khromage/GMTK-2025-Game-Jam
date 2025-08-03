@@ -1,22 +1,18 @@
 public enum SFXType
 {
-    BoulderPush,
-    UpgradePurchased,
-    PrestigeCompleted,
-    CriticalHit,
-    ComboActivated,
     ButtonClick,
+    BoulderPush,
+    PrestigeCompleted,
     RockSlide,
-    Footstep,
+    CriticalHit,
     FallingPebble,
-    MenuOpen,
-    MenuClose
 }
 
 public enum MusicType
 {
     None,
-    MainTheme,
+    AncientRite,
+    WaltzPrimordial
 }
 
 public enum AmbientType

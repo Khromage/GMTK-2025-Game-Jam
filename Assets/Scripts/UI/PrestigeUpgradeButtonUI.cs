@@ -18,12 +18,13 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
     
     private PrestigeUpgradeType _upgradeType;
     private UIManager _uiManager;
+    private bool _isShaking = false;
     
     public void Initialize(PrestigeUpgradeType upgradeType, UIManager uiManager)
     {
         _upgradeType = upgradeType;
         _uiManager = uiManager;
-        
+
         if (_nameText != null) _nameText.text = _upgradeDataSO.GetPrestigeUpgrade(upgradeType).Name;
         if (_descriptionText != null) _descriptionText.text = _upgradeDataSO.GetPrestigeUpgrade(upgradeType).Description;
         if (_icon != null) _icon.sprite = _upgradeDataSO.GetPrestigeUpgrade(upgradeType).Icon;
@@ -51,7 +52,7 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
     
     public void UpdateCost(int cost)
     {
-        if (_costText != null) _costText.text = $"Cost: {cost}";
+        if (_costText != null) _costText.text = $"{cost}";
     }
     
     public void SetAffordable(bool affordable)
@@ -76,7 +77,7 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
         if (_uiManager != null)
         {
             bool success = _uiManager.TryPurchasePrestigeUpgrade(_upgradeType);
-            if (!success)
+            if (!success && !_isShaking)
             {
                 StartCoroutine(ShakeAnimation());
             }
@@ -119,6 +120,8 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
         float duration = 0.3f;
         float elapsed = 0f;
 
+        _isShaking = true;
+
         while (elapsed < duration)
         {
             float x = originalPosition.x + Random.Range(-shakeAmount, shakeAmount);
@@ -128,5 +131,6 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
         }
 
         transform.localPosition = originalPosition;
+        _isShaking = false;
     }
 }

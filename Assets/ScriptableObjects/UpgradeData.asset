@@ -13,33 +13,14 @@ MonoBehaviour:
   m_Name: UpgradeData
   m_EditorClassIdentifier: 
   _normalUpgrades:
-  - UpgradeType: 1
-    Name: Determination
-    Description: Auto Push Rate
-    Icon: {fileID: 0}
-    BaseCost: 1
-    CostMultiplier: 1.15
-    IsInfinite: 1
-    MaxLevel: 0
-    UnlockConditions: []
-    EffectData:
-      BaseValue: 0
-      ValuePerLevel: 0.1
-      EffectType: 1
-      ScalingCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 4
   - UpgradeType: 0
     Name: Shove
     Description: Manual Power Increase
     Icon: {fileID: 0}
     BaseCost: 1
-    CostMultiplier: 1.15
-    IsInfinite: 0
-    MaxLevel: 20
+    CostMultiplier: 1.25
+    IsInfinite: 1
+    MaxLevel: 0
     UnlockConditions: []
     EffectData:
       BaseValue: 0
@@ -51,14 +32,33 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 4
+  - UpgradeType: 1
+    Name: Determination
+    Description: Auto Push Rate
+    Icon: {fileID: 0}
+    BaseCost: 1
+    CostMultiplier: 1.25
+    IsInfinite: 0
+    MaxLevel: 50
+    UnlockConditions: []
+    EffectData:
+      BaseValue: 0
+      ValuePerLevel: 0.1
+      EffectType: 1
+      ScalingCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 4
   - UpgradeType: 2
     Name: Stronger Muscles
     Description: Auto Power Increase
     Icon: {fileID: 0}
     BaseCost: 1
-    CostMultiplier: 1.15
-    IsInfinite: 0
-    MaxLevel: 20
+    CostMultiplier: 1.25
+    IsInfinite: 1
+    MaxLevel: 0
     UnlockConditions:
     - ConditionType: 0
       RequiredUpgrade: 1
@@ -68,7 +68,7 @@ MonoBehaviour:
       RequiredGrit: 0
       RequiredFavors: 0
     EffectData:
-      BaseValue: 0
+      BaseValue: 1
       ValuePerLevel: 5
       EffectType: 2
       ScalingCurve:
@@ -79,10 +79,10 @@ MonoBehaviour:
         m_RotationOrder: 4
   - UpgradeType: 3
     Name: Momentum
-    Description: Push Quickly To Gain Power through Combo
+    Description: Push Quickly To Gain Power Through Combo Multiplier
     Icon: {fileID: 0}
     BaseCost: 1
-    CostMultiplier: 1.15
+    CostMultiplier: 1.25
     IsInfinite: 0
     MaxLevel: 20
     UnlockConditions: []
@@ -101,13 +101,13 @@ MonoBehaviour:
     Description: Critical Hit Rate Increases
     Icon: {fileID: 0}
     BaseCost: 1
-    CostMultiplier: 1.15
+    CostMultiplier: 1.25
     IsInfinite: 0
-    MaxLevel: 50
+    MaxLevel: 100
     UnlockConditions: []
     EffectData:
       BaseValue: 0
-      ValuePerLevel: 2
+      ValuePerLevel: 1
       EffectType: 3
       ScalingCurve:
         serializedVersion: 2
@@ -120,7 +120,7 @@ MonoBehaviour:
     Description: Critical Hit Damage Increases
     Icon: {fileID: 0}
     BaseCost: 1
-    CostMultiplier: 1.15
+    CostMultiplier: 1.25
     IsInfinite: 0
     MaxLevel: 20
     UnlockConditions:
@@ -142,6 +142,25 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
   _prestigeUpgrades:
+  - UpgradeType: 2
+    Name: Blessing Of Gaia
+    Description: Gaia Blesses The Earth Beneath You! Flattens the Slope of the Mountain
+    Icon: {fileID: 0}
+    BaseCost: 1
+    CostIncrease: 5
+    MaxLevel: 10
+    EffectData:
+      BaseValue: 0
+      ValuePerLevel: 1
+      EffectType: 6
+      ScalingCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+    UpgradeColor: {r: 0, g: 0, b: 0, a: 0}
+    FlavorText: 
   - UpgradeType: 0
     Name: Might Of Hercules
     Description: Hercules Grants You His MIght! Increase All Push Power Further
@@ -168,25 +187,6 @@ MonoBehaviour:
     BaseCost: 1
     CostIncrease: 3
     MaxLevel: 5
-    EffectData:
-      BaseValue: 0
-      ValuePerLevel: 1
-      EffectType: 6
-      ScalingCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-    UpgradeColor: {r: 0, g: 0, b: 0, a: 0}
-    FlavorText: 
-  - UpgradeType: 2
-    Name: Blessing Of Gaia
-    Description: Gaia Blesses Your Journey! Flattens the Slope of the Mountain
-    Icon: {fileID: 0}
-    BaseCost: 1
-    CostIncrease: 5
-    MaxLevel: 10
     EffectData:
       BaseValue: 0
       ValuePerLevel: 1

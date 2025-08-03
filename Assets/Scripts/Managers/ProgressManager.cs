@@ -13,6 +13,7 @@ public class ProgressManager : MonoBehaviour
     [Header("Push Configuration")]
     [SerializeField] private float _basePushPower = 1f;
     [SerializeField] private float _slopeIncreaseRate = 6f;
+    [SerializeField] private float _slopeMax = 60f;
     [SerializeField] private float _slopeIncreaseInterval = 10000f;
 
     private UpgradeManager _upgradeManager;
@@ -22,6 +23,7 @@ public class ProgressManager : MonoBehaviour
     public UnityAction<ComboState> OnComboStateChanged;
     private List<Push> _comboPushes = new List<Push>();
     public UnityAction<bool> OnCriticalHit;
+    public UnityAction OnPushPerformed;
 
     // public getters for private values/data
     public float GetCurrentDistance() => _currentDistance;
@@ -89,6 +91,9 @@ public class ProgressManager : MonoBehaviour
 
     private void ProcessPush(float pushPower, bool isManualPush)
     {
+        // Fire animation event at the beginning
+        OnPushPerformed?.Invoke();
+
         // Apply slope resistance
         float effectivePower = pushPower / _currentSlope;
 
@@ -178,9 +183,9 @@ public class ProgressManager : MonoBehaviour
             _comboState.ComboTimer = _maxComboTime; // Reset timer
             _comboState.IsActive = true;
             _comboState.Multiplier = _upgradeManager.GetMomentumMultiplier();
+            NotifyComboStateChanged();
         }
 
-        NotifyComboStateChanged();
     }
 
     private float GetCurrentComboMultiplier()
@@ -206,9 +211,10 @@ public class ProgressManager : MonoBehaviour
         float slopeReduction = gaiaLevel * 0.05f; // 5% reduction per level
         targetSlope *= (1f - slopeReduction);
 
-        if (Mathf.Abs(targetSlope - _currentSlope) > 0.01f)
+        if (Mathf.Abs(targetSlope - _currentSlope) > 0.01f && targetSlope < _slopeMax)
         {
-            _currentSlope = Mathf.Lerp(_currentSlope, targetSlope, Time.deltaTime);
+            //_currentSlope = Mathf.Lerp(_currentSlope, targetSlope, Time.deltaTime);
+            _currentSlope = targetSlope;
             NotifySlopeChanged();
         }
     }

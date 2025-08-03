@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private InputManager _inputManager;
+    [SerializeField] private Sisyphus _sisyphus;
 
     // public getters to access managers & their methods without accidentally changing the reference(s)
     public CurrencyManager CurrencyManager => _currencyManager;
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public UIManager UIManager => _uiManager;
     public AudioManager AudioManager => _audioManager;
     public InputManager InputManager => _inputManager;
+    public Sisyphus Sisyphus => _sisyphus;
 
     void Awake()
     {
@@ -47,6 +49,8 @@ public class GameManager : MonoBehaviour
         //_upgradeManager.ManualCheckUnlocks();
         _uiManager.RefreshUIAfterLoad();
         StartGameLoop();
+        _audioManager.PlayMusic(MusicType.AncientRite);
+        _sisyphus.Initialize(_progressManager);
     }
 
     private void InitializeManagers()

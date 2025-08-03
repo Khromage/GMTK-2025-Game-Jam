@@ -263,7 +263,7 @@ public class UpgradeManager : MonoBehaviour
     {
         int sleightLevel = GetNormalUpgradeLevel(UpgradeType.SleightOfForce);
         UpgradeData sleightData = _upgradeDataSO.GetNormalUpgrade(UpgradeType.SleightOfForce);
-        return sleightLevel * sleightData.EffectData.ValuePerLevel; // 1% per level
+        return sleightLevel * sleightData.EffectData.ValuePerLevel;
     }
 
     public float GetCriticalMultiplier()
@@ -271,7 +271,7 @@ public class UpgradeManager : MonoBehaviour
         int titanicLevel = GetNormalUpgradeLevel(UpgradeType.TitanicForce);
         UpgradeData titanicData = _upgradeDataSO.GetNormalUpgrade(UpgradeType.TitanicForce);
         float baseMultiplier = 2f; // Base crit multiplier
-        return baseMultiplier + (titanicLevel * titanicData.EffectData.ValuePerLevel); // 0.05x per level
+        return baseMultiplier + (titanicLevel * titanicData.EffectData.ValuePerLevel);
     }
 
     public float GetMomentumMultiplier()

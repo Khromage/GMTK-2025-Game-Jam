@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [Header("Progress UI")]
     [SerializeField] private TextMeshProUGUI _distanceText;
     [SerializeField] private TextMeshProUGUI _slopeText;
+    [SerializeField] private Transform _mountainSlope;
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private Image _progressFill;
     [SerializeField] private TextMeshProUGUI _progressPercentText;
@@ -80,11 +81,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _musicVolumeText;
     [SerializeField] private TextMeshProUGUI _ambientVolumeText;
 
-    [Header("Animation Settings")]
+    /* [Header("Animation Settings")]
     [SerializeField] private float _currencyAnimationDuration = 0.5f;
     [SerializeField] private AnimationCurve _currencyAnimationCurve;
     [SerializeField] private float _upgradeButtonPulseScale = 1.1f;
-    [SerializeField] private float _upgradeButtonPulseDuration = 0.3f;
+    [SerializeField] private float _upgradeButtonPulseDuration = 0.3f; */
 
     // Manager references
     private CurrencyManager _currencyManager;
@@ -585,11 +586,11 @@ public class UIManager : MonoBehaviour
     {
         if (_slopeText != null)
         {
-            _slopeText.text = $"Slope: {newSlope:F2}x";
-
+            _slopeText.text = $"Slope: {newSlope:F2}°";
+            _mountainSlope.rotation = Quaternion.Euler(0, 0, newSlope);
             // Color-code slope difficulty
-            Color slopeColor = GetSlopeColor(newSlope);
-            _slopeText.color = slopeColor;
+            //Color slopeColor = GetSlopeColor(newSlope);
+            //_slopeText.color = slopeColor;
         }
     }
 
@@ -696,6 +697,8 @@ public class UIManager : MonoBehaviour
 
     private void HandleBoulderClicked()
     {
+        _audioManager?.PlaySFX(SFXType.ButtonClick); // placeholder SFX
+
         if (_boulderClickEffect != null)
         {
             // Play boulder click visual effect
@@ -764,6 +767,8 @@ public class UIManager : MonoBehaviour
 
     public void ToggleSettingsMenu()
     {
+        _audioManager?.PlaySFX(SFXType.ButtonClick);
+        
         if (_settingsPanel != null)
         {
             bool isActive = _settingsPanel.activeSelf;
@@ -771,11 +776,11 @@ public class UIManager : MonoBehaviour
 
             if (!isActive)
             {
-                _audioManager?.PlaySFX(SFXType.MenuOpen);
+                //_audioManager?.PlaySFX(SFXType.MenuOpen);
             }
             else
             {
-                _audioManager?.PlaySFX(SFXType.MenuClose);
+                //_audioManager?.PlaySFX(SFXType.MenuClose);
             }
         }
     }
@@ -792,11 +797,11 @@ public class UIManager : MonoBehaviour
 
             if (!isActive)
             {
-                _audioManager?.PlaySFX(SFXType.MenuOpen);
+                //_audioManager?.PlaySFX(SFXType.MenuOpen);
             }
             else
             {
-                _audioManager?.PlaySFX(SFXType.MenuClose);
+                //_audioManager?.PlaySFX(SFXType.MenuClose);
             }
         }
     }
@@ -819,6 +824,8 @@ public class UIManager : MonoBehaviour
 
     private void HandlePrestigeButtonClick()
     {
+        _audioManager?.PlaySFX(SFXType.ButtonClick);
+
         if (_prestigeManager != null && _prestigeManager.CanPrestige())
         {
             _prestigeManager.ExecutePrestige();
@@ -1165,7 +1172,7 @@ public class UIManager : MonoBehaviour
                 break;
         }
 
-        _audioManager?.PlaySFX(SFXType.MenuOpen);
+        //_audioManager?.PlaySFX(SFXType.MenuOpen);
     }
     
     public void HidePanel(UIPanel panelType)
@@ -1186,7 +1193,7 @@ public class UIManager : MonoBehaviour
                 break;
         }
         
-        _audioManager?.PlaySFX(SFXType.MenuClose);
+        //_audioManager?.PlaySFX(SFXType.MenuClose);
     }
     
     public void TogglePanel(UIPanel panelType)
@@ -1297,11 +1304,13 @@ public class UIManager : MonoBehaviour
     // Public methods for button UI components to call
     public bool TryPurchaseNormalUpgrade(UpgradeType upgradeType)
     {
+        _audioManager?.PlaySFX(SFXType.ButtonClick);
         return _upgradeManager.PurchaseNormalUpgrade(upgradeType);
     }
 
     public bool TryPurchasePrestigeUpgrade(PrestigeUpgradeType upgradeType)
     {
+        _audioManager?.PlaySFX(SFXType.ButtonClick);
         return _upgradeManager.PurchasePrestigeUpgrade(upgradeType);
     }
     
