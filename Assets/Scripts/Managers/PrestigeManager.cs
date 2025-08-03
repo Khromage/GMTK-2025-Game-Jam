@@ -7,6 +7,9 @@ public class PrestigeManager : MonoBehaviour
     [SerializeField] private float _prestigeThreshold = 10000f;
     [SerializeField] private int _prestigeCount = 0;
 
+    [Header("State Tracking")]
+    [SerializeField] private bool _wasPrestigeAvailable = false;
+
     private CurrencyManager _currencyManager;
     private ProgressManager _progressManager;
     private UpgradeManager _upgradeManager;
@@ -34,11 +37,13 @@ public class PrestigeManager : MonoBehaviour
     public void SetDefaultValues()
     {
         _prestigeCount = 0;
+        _wasPrestigeAvailable = false;
     }
 
     public void LoadFromSaveData(SaveData saveData)
     {
         _prestigeCount = saveData.prestigeCount;
+        _wasPrestigeAvailable = CanPrestige();
     }
 
     void Update()
@@ -48,10 +53,16 @@ public class PrestigeManager : MonoBehaviour
 
     private void CheckPrestigeAvailability()
     {
-        if (CanPrestige())
+        bool isCurrentlyAvailable = CanPrestige();
+        
+        // Only fire event if prestige just became available (state changed from false to true)
+        if (isCurrentlyAvailable && !_wasPrestigeAvailable)
         {
             OnPrestigeAvailable?.Invoke();
         }
+        
+        // Update the previous state
+        _wasPrestigeAvailable = isCurrentlyAvailable;
     }
 
     public bool CanPrestige()
@@ -81,6 +92,9 @@ public class PrestigeManager : MonoBehaviour
 
         // Apply prestige bonuses
         ApplyPrestigeBonuses();
+
+        // Reset prestige availability state since we just prestiged
+        _wasPrestigeAvailable = false;
 
         // Notify completion
         OnPrestigeCompleted?.Invoke(favorsEarned);

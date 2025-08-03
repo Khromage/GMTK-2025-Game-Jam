@@ -9,7 +9,7 @@ public class NotificationUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI _messageText;
     [SerializeField] private Image _background;
-    [SerializeField] private Image _icon;
+    [SerializeField] private Image _icon; // not really neccessary?
     
     public void Initialize(string message, NotificationType type, float displayTime)
     {

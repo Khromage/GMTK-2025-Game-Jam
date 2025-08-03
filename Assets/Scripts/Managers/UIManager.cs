@@ -528,8 +528,8 @@ public class UIManager : MonoBehaviour
         UpdateAllUpgradeButtonCosts();
 
         // Show notification
-        string upgradeName = upgradeType.ToString();
-        ShowNotification($"{upgradeName} upgraded to level {newLevel}!", NotificationType.Upgrade);
+        //string upgradeName = upgradeType.ToString();
+        //ShowNotification($"{upgradeName} upgraded to level {newLevel}!", NotificationType.Upgrade);
     }
 
     private void HandlePrestigeUpgradePurchased(PrestigeUpgradeType upgradeType, int newLevel)
@@ -544,8 +544,8 @@ public class UIManager : MonoBehaviour
         UpdateAllPrestigeUpgradeButtonCosts();
 
         // Show notification
-        string upgradeName = upgradeType.ToString();
-        ShowNotification($"{upgradeName} upgraded to level {newLevel}!", NotificationType.PrestigeUpgrade);
+        //string upgradeName = upgradeType.ToString();
+        //ShowNotification($"{upgradeName} upgraded to level {newLevel}!", NotificationType.PrestigeUpgrade);
     }
 
     private void HandleUpgradeUnlocked(UpgradeType upgradeType, bool unlocked)

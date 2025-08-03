@@ -10,6 +10,9 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Dictionary<UpgradeType, int> _normalUpgradeLevels = new Dictionary<UpgradeType, int>();
     [SerializeField] private Dictionary<PrestigeUpgradeType, int> _prestigeUpgradeLevels = new Dictionary<PrestigeUpgradeType, int>();
 
+    [Header("Upgrade Unlock States")]
+    [SerializeField] private Dictionary<UpgradeType, bool> _previousUnlockStates = new Dictionary<UpgradeType, bool>();
+
     private CurrencyManager _currencyManager;
 
     public UnityAction<UpgradeType, int> OnNormalUpgradePurchased;
@@ -41,12 +44,19 @@ public class UpgradeManager : MonoBehaviour
         {
             _prestigeUpgradeLevels[upgradeType] = 0;
         }
+
+        // Initialize unlock states
+        foreach (UpgradeType upgradeType in System.Enum.GetValues(typeof(UpgradeType)))
+        {
+            _previousUnlockStates[upgradeType] = false;
+        }
     }
 
     // public method exposed to call InitializeUpgradeDictionaries() from external classes
     public void SetDefaultValues()
     {
         InitializeUpgradeDictionaries();
+        UpdatePreviousUnlockStates();
     }
 
     public void LoadFromSaveData(SaveData saveData)
@@ -85,6 +95,18 @@ public class UpgradeManager : MonoBehaviour
                     Debug.LogWarning($"Saved prestige upgrade type {upgradeLevel.upgradeType} no longer exists in game");
                 }
             }
+        }
+
+        // IMPORTANT: After loading all upgrade levels, update the previous unlock states
+        // to reflect what's actually unlocked so we don't fire false unlock events
+        UpdatePreviousUnlockStates();
+    }
+
+    private void UpdatePreviousUnlockStates()
+    {
+        foreach (UpgradeType upgradeType in System.Enum.GetValues(typeof(UpgradeType)))
+        {
+            _previousUnlockStates[upgradeType] = IsNormalUpgradeUnlocked(upgradeType);
         }
     }
 
@@ -164,10 +186,20 @@ public class UpgradeManager : MonoBehaviour
     {
         foreach (UpgradeType upgradeType in System.Enum.GetValues(typeof(UpgradeType)))
         {
-            bool wasUnlocked = IsNormalUpgradeUnlocked(upgradeType);
-            OnUpgradeUnlocked?.Invoke(upgradeType, wasUnlocked);
+            bool isCurrentlyUnlocked = IsNormalUpgradeUnlocked(upgradeType);
+            bool wasAlreadyUnlocked = _previousUnlockStates.GetValueOrDefault(upgradeType, false);
+            
+            // Only invoke event if unlock state changed from false to true
+            if (isCurrentlyUnlocked && !wasAlreadyUnlocked)
+            {
+                OnUpgradeUnlocked?.Invoke(upgradeType, true);
+            }
+            
+            // Update the previous state
+            _previousUnlockStates[upgradeType] = isCurrentlyUnlocked;
         }
     }
+
     public void ManualCheckUnlocks()
     {
         Debug.Log("[UpgradeManager] ManualCheckUnlocks called");
@@ -305,6 +337,9 @@ public class UpgradeManager : MonoBehaviour
         {
             _normalUpgradeLevels[upgradeType] = 0;
         }
+
+        // Update unlock states after reset
+        UpdatePreviousUnlockStates();
     }
 
 }
