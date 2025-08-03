@@ -40,7 +40,13 @@ public class UpgradeButtonUI : MonoBehaviour
             _levelText.text = $"Level {level}";
             UpgradeData data = _upgradeDataSO.GetNormalUpgrade(_upgradeType);
             if (level >= data.MaxLevel && !data.IsInfinite)
+            {
                 _maxLevelIndicator.SetActive(true);
+            }
+            else
+            {
+                 _maxLevelIndicator.SetActive(false);
+            }
         }
     }
 
@@ -80,7 +86,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void PlayResetAnimation()
     {
-        StartCoroutine(ResetAnimation());
+        //StartCoroutine(ResetAnimation());
     }
 
     private void OnButtonClick()

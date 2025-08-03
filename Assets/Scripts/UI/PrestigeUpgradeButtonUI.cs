@@ -38,7 +38,14 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
             _levelText.text = $"Level {level}";
             PrestigeUpgradeData data = _upgradeDataSO.GetPrestigeUpgrade(_upgradeType);
             if (level >= data.MaxLevel)
+            {
                 _maxLevelIndicator.SetActive(true);
+            }
+            else
+            {
+                _maxLevelIndicator.SetActive(false);
+            }
+
         }
     }
     

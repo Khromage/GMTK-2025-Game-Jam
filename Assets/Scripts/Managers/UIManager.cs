@@ -129,8 +129,7 @@ public class UIManager : MonoBehaviour
         UpdateInitialUI();
 
         // Default to showing normal upgrades
-        ShowPanel(UIPanel.NormalUpgrades);
-
+        ShowNormalUpgradesPanel();
         //Debug.Log("UIManager initialized successfully");
     }
 
@@ -153,7 +152,7 @@ public class UIManager : MonoBehaviour
         RefreshPrestigeDisplay();
         
         // Check upgrade unlocks
-        RefreshUpgradeUnlocks();
+        //RefreshUpgradeUnlocks(); obsolete due to RefreshAllUpgradeButtons()
     }
 
     private void RefreshCurrencyDisplay()
@@ -178,10 +177,12 @@ public class UIManager : MonoBehaviour
             
             int level = _upgradeManager.GetNormalUpgradeLevel(upgradeType);
             int cost = _upgradeManager.CalculateNormalUpgradeCost(upgradeType, level);
+            bool isUnlocked = _upgradeManager.IsNormalUpgradeUnlocked(upgradeType);
             bool canAfford = _currencyManager.GetGrit() >= cost;
             
             buttonUI.UpdateLevel(level);
             buttonUI.UpdateCost(cost);
+            buttonUI.SetUnlocked(isUnlocked);
             buttonUI.SetAffordable(canAfford);
         }
         
@@ -227,7 +228,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void RefreshUpgradeUnlocks()
+    /* private void RefreshUpgradeUnlocks()
     {
         // Check and update unlock status for all normal upgrades
         foreach (UpgradeType upgradeType in System.Enum.GetValues(typeof(UpgradeType)))
@@ -238,7 +239,7 @@ public class UIManager : MonoBehaviour
                 buttonUI.SetUnlocked(isUnlocked);
             }
         }
-    }
+    } */
 
     #endregion
 
@@ -669,7 +670,10 @@ public class UIManager : MonoBehaviour
         UpdatePrestigeCount();
 
         // Reset normal upgrade buttons
-        ResetNormalUpgradeButtons();
+        //ResetNormalUpgradeButtons(); handled by next line
+
+        // Update button displays
+        RefreshAllUpgradeButtons();
 
         // Show prestige completion notification
         ShowNotification($"Prestige completed! Earned {favorsEarned} Favors!", NotificationType.Prestige);
@@ -1130,19 +1134,19 @@ public class UIManager : MonoBehaviour
         Destroy(flashOverlay);
     }
 
-    private void ResetNormalUpgradeButtons()
+    /* private void ResetNormalUpgradeButtons()
     {
         foreach (var buttonUI in _normalUpgradeButtons.Values)
         {
             buttonUI.UpdateLevel(0);
             buttonUI.PlayResetAnimation();
         }
-    }
-
+    }*/
+    
     #endregion
 
     #region Panel Management
-    
+
     public void ShowPanel(UIPanel panelType)
     {
         switch (panelType)
@@ -1160,7 +1164,7 @@ public class UIManager : MonoBehaviour
                 if (_settingsPanel != null) _settingsPanel.SetActive(true);
                 break;
         }
-        
+
         _audioManager?.PlaySFX(SFXType.MenuOpen);
     }
     

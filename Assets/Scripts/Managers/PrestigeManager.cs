@@ -68,6 +68,8 @@ public class PrestigeManager : MonoBehaviour
         int favorsEarned = CalculatePrestigeReward();
         _currencyManager.AddFavors(favorsEarned);
 
+        _currencyManager.ResetGrit();
+
         // Increment prestige count
         _prestigeCount++;
 
