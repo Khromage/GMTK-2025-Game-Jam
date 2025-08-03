@@ -25,9 +25,10 @@ GRAPHICS & SPRITES
 "Cave Boulder" by TheValar
 Licensed under CC BY 3.0 (Creative Commons Attribution 3.0 Unported)
 Source: https://opengameart.org/content/cave-boulder
-Modified: 
 
-
+"2D Pixel Art Character Template Asset Pack" by Hayden Zegley
+Licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Source: https://zegley.itch.io/2d-platformermetroidvania-asset-pack
 
 FONTS
 -----
