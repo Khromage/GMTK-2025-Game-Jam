@@ -64,14 +64,22 @@ public class CurrencyManager : MonoBehaviour
         //GameManager.Instance.AudioManager.PlaySFX(SFXType.GritSpent);
         return true;
     }
+    public void ResetGrit()
+    {
+        _grit = 0;
+        NotifyGritChanged();
+
+        // play sound effect
+        //GameManager.Instance.AudioManager.PlaySFX(SFXType.GritSpent);
+    }
     
     public void AddFavors(int amount)
     {
         if (amount <= 0) return;
-        
+
         _favors += amount;
         NotifyFavorsChanged();
-        
+
         // Optional: Play sound effect
         //GameManager.Instance.AudioManager.PlaySFX(SFXType.FavorsEarned);
     }

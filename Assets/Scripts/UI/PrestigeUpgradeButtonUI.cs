@@ -38,7 +38,14 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
             _levelText.text = $"Level {level}";
             PrestigeUpgradeData data = _upgradeDataSO.GetPrestigeUpgrade(_upgradeType);
             if (level >= data.MaxLevel)
+            {
                 _maxLevelIndicator.SetActive(true);
+            }
+            else
+            {
+                _maxLevelIndicator.SetActive(false);
+            }
+
         }
     }
     
@@ -49,7 +56,7 @@ public class PrestigeUpgradeButtonUI : MonoBehaviour
     
     public void SetAffordable(bool affordable)
     {
-        if (_button != null) _button.interactable = affordable;
+        //if (_button != null) _button.interactable = affordable;
         
         // Visual feedback for affordability
         Color buttonColor = affordable ? Color.white : Color.gray;

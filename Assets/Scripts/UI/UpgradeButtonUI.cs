@@ -40,7 +40,13 @@ public class UpgradeButtonUI : MonoBehaviour
             _levelText.text = $"Level {level}";
             UpgradeData data = _upgradeDataSO.GetNormalUpgrade(_upgradeType);
             if (level >= data.MaxLevel && !data.IsInfinite)
+            {
                 _maxLevelIndicator.SetActive(true);
+            }
+            else
+            {
+                 _maxLevelIndicator.SetActive(false);
+            }
         }
     }
 
@@ -51,7 +57,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void SetAffordable(bool affordable)
     {
-        if (_button != null) _button.interactable = affordable && _isUnlocked;
+        //if (_button != null) _button.interactable = affordable && _isUnlocked;
 
         // Visual feedback for affordability
         Color buttonColor = affordable ? Color.white : Color.gray;
@@ -80,7 +86,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
     public void PlayResetAnimation()
     {
-        StartCoroutine(ResetAnimation());
+        //StartCoroutine(ResetAnimation());
     }
 
     private void OnButtonClick()
